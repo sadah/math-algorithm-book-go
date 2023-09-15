@@ -1,13 +1,18 @@
 package main
 
 import (
+	"fmt"
 	"bufio"
 	"os"
 	"strconv"
 )
 
 func solve(A []int64) {
-
+	sum := int64(0)
+	for _, x := range A {
+		sum += x
+	}
+	fmt.Println(sum)
 }
 
 func main() {
