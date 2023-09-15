@@ -7,7 +7,7 @@ The original support site is here.
 * https://github.com/E869120/math-algorithm-book
 
 
-## require
+## Require
 
 atcoder-tools
 
