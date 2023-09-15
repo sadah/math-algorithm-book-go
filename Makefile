@@ -21,7 +21,7 @@ build:
 
 # Test target
 .PHONY: test
-test: test
+test: build
 	@if [ -z "$(DIR)" ]; then \
 		echo "Error: Please specify the directory (e.g., make test DIR=<test_directory>)"; \
 		exit 1; \
