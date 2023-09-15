@@ -21,6 +21,35 @@ atcoder-tools
 
 ## Usage
 
+### Make
+
+```
+Usage:
+        make build DIR=<build_directory>        Run test scripts (Specify the directory).
+        make test DIR=<test_directory>          Run test scripts (Specify the directory).
+        make submit DIR=<submit_directory>      Run test scripts (Specify the directory).
+```
+
+```
+❯ make build DIR=./src/001
+Build directory: ./src/001
+[Main Program]
+compile command:  go build -o main main.go
+Compiling... (command: `go build -o main main.go`)
+```
+
+```
+❯ make test DIR=./src/001
+make: Circular test <- test dependency dropped.
+Test directory: ./src/001
+# in_1.txt ... PASSED 1 ms
+# in_2.txt ... PASSED 1 ms
+# in_3.txt ... PASSED 1 ms
+Passed all test cases!!!
+```
+
+### Manual
+
 Compile
 
 ```
