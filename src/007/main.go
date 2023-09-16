@@ -9,9 +9,11 @@ import (
 
 func solve(N int64, X int64, Y int64) {
 	ans := int64(0)
-	ans += N / X
-	ans += N / Y
-	ans -= N / (X * Y)
+	for i := int64(1); i <= N; i++ {
+		if i%X == 0 || i%Y == 0 {
+			ans++
+		}
+	}
 	fmt.Println(ans)
 }
 
