@@ -2,12 +2,17 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 	"strconv"
 )
 
 func solve(N int64, X int64, Y int64) {
-
+	ans := int64(0)
+	ans += N / X
+	ans += N / Y
+	ans -= N / (X * Y)
+	fmt.Println(ans)
 }
 
 func main() {
@@ -17,13 +22,13 @@ func main() {
 	scanner.Buffer(make([]byte, initialBufSize), maxBufSize)
 	scanner.Split(bufio.ScanWords)
 	var N int64
-    scanner.Scan()
-    N, _ = strconv.ParseInt(scanner.Text(), 10, 64)
-    var X int64
-    scanner.Scan()
-    X, _ = strconv.ParseInt(scanner.Text(), 10, 64)
-    var Y int64
-    scanner.Scan()
-    Y, _ = strconv.ParseInt(scanner.Text(), 10, 64)
+	scanner.Scan()
+	N, _ = strconv.ParseInt(scanner.Text(), 10, 64)
+	var X int64
+	scanner.Scan()
+	X, _ = strconv.ParseInt(scanner.Text(), 10, 64)
+	var Y int64
+	scanner.Scan()
+	Y, _ = strconv.ParseInt(scanner.Text(), 10, 64)
 	solve(N, X, Y)
 }
