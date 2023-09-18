@@ -2,12 +2,27 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 	"strconv"
 )
 
 func solve(N int64, A []int64) {
-
+	ans := int64(0)
+	for i := int64(0); i < N; i++ {
+		for j := i + 1; j < N; j++ {
+			for k := j + 1; k < N; k++ {
+				for l := k + 1; l < N; l++ {
+					for m := l + 1; m < N; m++ {
+						if A[i]+A[j]+A[k]+A[l]+A[m] == 1000 {
+							ans++
+						}
+					}
+				}
+			}
+		}
+	}
+	fmt.Println(ans)
 }
 
 func main() {
@@ -17,12 +32,12 @@ func main() {
 	scanner.Buffer(make([]byte, initialBufSize), maxBufSize)
 	scanner.Split(bufio.ScanWords)
 	var N int64
-    scanner.Scan()
-    N, _ = strconv.ParseInt(scanner.Text(), 10, 64)
-    A := make([]int64, N)
-    for i := int64(0); i < N; i++ {
-        scanner.Scan()
-        A[i], _ = strconv.ParseInt(scanner.Text(), 10, 64)
-    }
+	scanner.Scan()
+	N, _ = strconv.ParseInt(scanner.Text(), 10, 64)
+	A := make([]int64, N)
+	for i := int64(0); i < N; i++ {
+		scanner.Scan()
+		A[i], _ = strconv.ParseInt(scanner.Text(), 10, 64)
+	}
 	solve(N, A)
 }
