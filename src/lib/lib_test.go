@@ -120,6 +120,30 @@ func Test_lcm(t *testing.T) {
 	}
 }
 
+func Test_factorial(t *testing.T) {
+	type args struct {
+		n int64
+	}
+	tests := []struct {
+		name string
+		args args
+		want int64
+	}{
+		{"OK: 1", args{1}, 1},
+		{"OK: 2", args{2}, 2},
+		{"OK: 3", args{3}, 6},
+		{"OK: 4", args{4}, 24},
+		{"OK: 5", args{5}, 120},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := factorial(tt.args.n); got != tt.want {
+				t.Errorf("factorial() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func Test_combination(t *testing.T) {
 	type args struct {
 		n int64
