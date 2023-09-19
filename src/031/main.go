@@ -2,12 +2,27 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 	"strconv"
 )
 
 func solve(N int64, A []int64) {
+	dp := make([][2]int64, N+1)
+	for i := int64(0); i < N; i++ {
+		// taro doesn't study on Ith day
+		dp[i+1][0] += max(dp[i][0], dp[i][1])
+		// taro studies on Ith day
+		dp[i+1][1] += dp[i][0] + A[i]
+	}
+	fmt.Println(max(dp[N][0], dp[N][1]))
+}
 
+func max(a, b int64) int64 {
+	if a > b {
+		return a
+	}
+	return b
 }
 
 func main() {
@@ -17,12 +32,12 @@ func main() {
 	scanner.Buffer(make([]byte, initialBufSize), maxBufSize)
 	scanner.Split(bufio.ScanWords)
 	var N int64
-    scanner.Scan()
-    N, _ = strconv.ParseInt(scanner.Text(), 10, 64)
-    A := make([]int64, N)
-    for i := int64(0); i < N; i++ {
-        scanner.Scan()
-        A[i], _ = strconv.ParseInt(scanner.Text(), 10, 64)
-    }
+	scanner.Scan()
+	N, _ = strconv.ParseInt(scanner.Text(), 10, 64)
+	A := make([]int64, N)
+	for i := int64(0); i < N; i++ {
+		scanner.Scan()
+		A[i], _ = strconv.ParseInt(scanner.Text(), 10, 64)
+	}
 	solve(N, A)
 }
