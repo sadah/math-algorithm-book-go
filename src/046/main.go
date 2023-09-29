@@ -26,28 +26,26 @@ func solve(R, C, sy, sx, gy, gx int64, c [][]string) {
 	for i := int64(0); i < R; i++ {
 		visited[i] = make([]bool, C)
 	}
-
-	queue := []Point{{sy, sx}}
 	visited[sy][sx] = true
+
+	m := map[Point]int64{}
+	queue := []Point{{sy, sx}}
 
 	for len(queue) > 0 {
 		p := queue[0]
 		queue = queue[1:]
 
-		if p.y == gy && p.x == gx {
-			fmt.Println("Goal")
-			return
-		}
-
 		for i := 0; i < 4; i++ {
 			ny, nx := p.y+dy[i], p.x+dx[i]
-
-			if 0 <= ny && ny < R && 0 <= nx && nx < C && c[ny][nx] == "." && !visited[ny][nx] {
-				queue = append(queue, Point{ny, nx})
+			if c[ny][nx] == "." && !visited[ny][nx] {
+				p := Point{ny, nx}
+				queue = append(queue, p)
 				visited[ny][nx] = true
+				m[p] = m[Point{p.y - dy[i], p.x - dx[i]}] + 1
 			}
 		}
 	}
+	fmt.Println(m[Point{gy, gx}])
 }
 
 func main() {
