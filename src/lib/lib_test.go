@@ -166,3 +166,93 @@ func Test_combination(t *testing.T) {
 		})
 	}
 }
+
+func Test_modPower(t *testing.T) {
+	type args struct {
+		a int64
+		n int64
+		m int64
+	}
+	tests := []struct {
+		name string
+		args args
+		want int64
+	}{
+		{"OK: 2^3 mod 1000000007", args{2, 3, 1000000007}, 8},
+		{"OK: 2^10 mod 1000000007", args{2, 10, 1000000007}, 1024},
+		{"OK: 2^101 mod 1000000007", args{2, 101, 1000000007}, 952742563},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := modPower(tt.args.a, tt.args.n, tt.args.m); got != tt.want {
+				t.Errorf("modPower() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_modDiv(t *testing.T) {
+	type args struct {
+		a int64
+		b int64
+		m int64
+	}
+	tests := []struct {
+		name string
+		args args
+		want int64
+	}{
+		{"OK: 6/3 mod 1000000007", args{6, 3, 1000000007}, 2},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := modDiv(tt.args.a, tt.args.b, tt.args.m); got != tt.want {
+				t.Errorf("modDiv() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_modMultiMatrix(t *testing.T) {
+	type args struct {
+		A [][]int64
+		B [][]int64
+		m int64
+	}
+	tests := []struct {
+		name string
+		args args
+		want [][]int64
+	}{
+		{"OK: A = [[1, 2], [3, 4]], B = [[5, 6], [7, 8]], m = 1000000007", args{[][]int64{{1, 2}, {3, 4}}, [][]int64{{5, 6}, {7, 8}}, 1000000007}, [][]int64{{19, 22}, {43, 50}}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := modMultiMatrix(tt.args.A, tt.args.B, tt.args.m); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("modMultiMatrix() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_modPowerMatrix(t *testing.T) {
+	type args struct {
+		A [][]int64
+		n int64
+		m int64
+	}
+	tests := []struct {
+		name string
+		args args
+		want [][]int64
+	}{
+		{"OK: A = [[1, 2], [3, 4]], n = 2, m = 1000000007", args{[][]int64{{1, 2}, {3, 4}}, 2, 1000000007}, [][]int64{{7, 10}, {15, 22}}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := modPowerMatrix(tt.args.A, tt.args.n, tt.args.m); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("modPowerMatrix() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
