@@ -73,6 +73,27 @@ func combination(n, r int64) int64 {
 	return factorial(n) / (factorial(r) * factorial(n-r))
 }
 
+// modCombination returns nCr % MOD.
+func modCombination(n, r, mod int64) int64 {
+	numerator, denominator := int64(1), int64(1)
+	// n C r = n! / (r! * (n-r)!)
+	// n! % MOD
+	for i := int64(1); i <= n; i++ {
+		numerator = (numerator * int64(i)) % mod
+	}
+	// r! % MOD
+	for i := int64(1); i <= r; i++ {
+		denominator = (denominator * int64(i)) % mod
+	}
+
+	// (n-r)! % MOD
+	for i := int64(1); i <= n-r; i++ {
+		denominator = (denominator * int64(i)) % mod
+	}
+
+	return modDiv(numerator, denominator, mod)
+}
+
 // a の n 乗を m で割った余りを返す関数
 func modPower(a, n, m int64) int64 {
 	// n が 0 の場合、1 を返す
