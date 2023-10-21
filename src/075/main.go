@@ -65,8 +65,8 @@ func main() {
 	var N int64
 	scanner.Scan()
 	N, _ = strconv.ParseInt(scanner.Text(), 10, 64)
-	A := make([]int64, N)
-	for i := int64(0); i < N; i++ {
+	A := make([]int64, N+1)
+	for i := int64(1); i <= N; i++ {
 		scanner.Scan()
 		A[i], _ = strconv.ParseInt(scanner.Text(), 10, 64)
 	}
