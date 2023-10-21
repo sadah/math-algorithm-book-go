@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"math/big"
 	"os"
 	"strconv"
 )
@@ -42,18 +43,26 @@ func modDiv(a, b, m int64) int64 {
 	return (a * modPower(b, m-2, m)) % m
 }
 
-var fact []int64
+var fact []*big.Int
 
 // modCombination returns nCr % MOD.
 func modCombination(n, r, mod int64) int64 {
 	if len(fact) == 0 {
-		fact = make([]int64, n+1)
-		fact[0] = 1
+		fact = make([]*big.Int, n+1)
+		fact[0] = big.NewInt(1)
 		for i := int64(1); i <= n; i++ {
-			fact[i] = (fact[i-1] * i) % mod
+			fact[i] = new(big.Int)
+			fact[i].Set(fact[i-1])
+			fact[i].Mul(fact[i], big.NewInt(i))
+			fact[i].Mod(fact[i], big.NewInt(mod))
 		}
 	}
-	return modDiv(fact[n], fact[r]*fact[n-r], mod)
+	numerator := new(big.Int)
+	numerator.Set(fact[n])
+	denominator := new(big.Int)
+	denominator.Mul(fact[r], fact[n-r])
+	denominator.Mod(denominator, big.NewInt(mod))
+	return modDiv(numerator.Int64(), denominator.Int64(), mod)
 }
 
 func main() {
