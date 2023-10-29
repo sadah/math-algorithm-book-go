@@ -2,12 +2,17 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 	"strconv"
 )
 
-func solve(N int64) {
-
+func solve(N int) {
+	k10, k5, k1 := 0, 0, 0
+	k10 = N / 10000
+	k5 = (N - 10000*k10) / 5000
+	k1 = (N - 10000*k10 - 5000*k5) / 1000
+	fmt.Println(k10 + k5 + k1)
 }
 
 func main() {
@@ -16,8 +21,8 @@ func main() {
 	const maxBufSize = 1000000
 	scanner.Buffer(make([]byte, initialBufSize), maxBufSize)
 	scanner.Split(bufio.ScanWords)
-	var N int64
-    scanner.Scan()
-    N, _ = strconv.ParseInt(scanner.Text(), 10, 64)
+	var N int
+	scanner.Scan()
+	N, _ = strconv.Atoi(scanner.Text())
 	solve(N)
 }
