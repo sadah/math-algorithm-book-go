@@ -3,35 +3,32 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"math"
 	"os"
+	"sort"
 	"strconv"
 )
 
-func solve(N int64, L []int64, R []int64) {
-	time, ans := int64(0), int64(0)
-	for {
-		minEnd := int64(math.MaxInt64)
-		for i := int64(0); i < N; i++ {
-			if L[i] < time {
-				continue
-			}
-			minEnd = min(minEnd, R[i])
+func solve(N int64, schedules []schedule) {
+	sort.Slice(schedules, func(i, j int) bool {
+		return schedules[i].end < schedules[j].end
+	})
+
+	ans := int64(1)
+	cur := schedules[0].end
+
+	for i := int64(0); i < N; i++ {
+		if schedules[i].start < cur {
+			continue
 		}
-		if minEnd == math.MaxInt64 {
-			break
-		}
-		time = minEnd
+		cur = schedules[i].end
 		ans++
 	}
 	fmt.Println(ans)
 }
 
-func min(x, y int64) int64 {
-	if x < y {
-		return x
-	}
-	return y
+type schedule struct {
+	start int64
+	end   int64
 }
 
 func main() {
@@ -43,13 +40,13 @@ func main() {
 	var N int64
 	scanner.Scan()
 	N, _ = strconv.ParseInt(scanner.Text(), 10, 64)
-	L := make([]int64, N)
-	R := make([]int64, N)
+	schedules := make([]schedule, N)
 	for i := int64(0); i < N; i++ {
 		scanner.Scan()
-		L[i], _ = strconv.ParseInt(scanner.Text(), 10, 64)
+		schedules[i].start, _ = strconv.ParseInt(scanner.Text(), 10, 64)
 		scanner.Scan()
-		R[i], _ = strconv.ParseInt(scanner.Text(), 10, 64)
+		schedules[i].end, _ = strconv.ParseInt(scanner.Text(), 10, 64)
+
 	}
-	solve(N, L, R)
+	solve(N, schedules)
 }
