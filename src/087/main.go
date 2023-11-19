@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 	"strconv"
 )
@@ -9,7 +10,9 @@ import (
 const MOD = 1000000007
 
 func solve(N int64) {
-
+	val := N * (N + 1) / 2
+	val %= MOD
+	fmt.Println(val * val % MOD)
 }
 
 func main() {
@@ -19,7 +22,7 @@ func main() {
 	scanner.Buffer(make([]byte, initialBufSize), maxBufSize)
 	scanner.Split(bufio.ScanWords)
 	var N int64
-    scanner.Scan()
-    N, _ = strconv.ParseInt(scanner.Text(), 10, 64)
+	scanner.Scan()
+	N, _ = strconv.ParseInt(scanner.Text(), 10, 64)
 	solve(N)
 }
