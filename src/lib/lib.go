@@ -1,6 +1,9 @@
 package lib
 
-import "sort"
+import (
+	"math/big"
+	"sort"
+)
 
 // isPrime returns true if n is prime.
 func isPrime(n int64) bool {
@@ -73,8 +76,30 @@ func combination(n, r int64) int64 {
 	return factorial(n) / (factorial(r) * factorial(n-r))
 }
 
+var fact []*big.Int
+
 // modCombination returns nCr % MOD.
 func modCombination(n, r, mod int64) int64 {
+	if len(fact) != int(n+1) {
+		fact = make([]*big.Int, n+1)
+		fact[0] = big.NewInt(1)
+		for i := int64(1); i <= n; i++ {
+			fact[i] = new(big.Int)
+			fact[i].Set(fact[i-1])
+			fact[i].Mul(fact[i], big.NewInt(i))
+			fact[i].Mod(fact[i], big.NewInt(mod))
+		}
+	}
+	numerator := new(big.Int)
+	numerator.Set(fact[n])
+	denominator := new(big.Int)
+	denominator.Mul(fact[r], fact[n-r])
+	denominator.Mod(denominator, big.NewInt(mod))
+	return modDiv(numerator.Int64(), denominator.Int64(), mod)
+}
+
+// modCombination returns nCr % MOD.
+func modCombinationNaive(n, r, mod int64) int64 {
 	numerator, denominator := int64(1), int64(1)
 	// n C r = n! / (r! * (n-r)!)
 	// n! % MOD

@@ -167,6 +167,56 @@ func Test_combination(t *testing.T) {
 	}
 }
 
+func Test_modCombination(t *testing.T) {
+	type args struct {
+		n   int64
+		r   int64
+		mod int64
+	}
+	tests := []struct {
+		name string
+		args args
+		want int64
+	}{
+		{"OK:  1,  1", args{1, 1, 1000000007}, 1},
+		{"OK:  3,  2", args{3, 2, 1000000007}, 3},
+		{"OK:  5,  3", args{5, 3, 1000000007}, 10},
+		{"OK: 50, 30", args{50, 30, 1000000007}, 211914057},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := modCombination(tt.args.n, tt.args.r, tt.args.mod); got != tt.want {
+				t.Errorf("modCombination() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_modCombinationNaive(t *testing.T) {
+	type args struct {
+		n   int64
+		r   int64
+		mod int64
+	}
+	tests := []struct {
+		name string
+		args args
+		want int64
+	}{
+		{"OK:  1,  1", args{1, 1, 1000000007}, 1},
+		{"OK:  3,  2", args{3, 2, 1000000007}, 3},
+		{"OK:  5,  3", args{5, 3, 1000000007}, 10},
+		{"OK: 50, 30", args{50, 30, 1000000007}, 211914057},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := modCombinationNaive(tt.args.n, tt.args.r, tt.args.mod); got != tt.want {
+				t.Errorf("modCombinationNaive() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func Test_modPower(t *testing.T) {
 	type args struct {
 		a int64
